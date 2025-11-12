@@ -1,0 +1,14 @@
+using Entity.Model.Base;
+namespace Entity.Model.Security
+{
+    public class RolFormPermission : BaseModel
+    {
+  
+        public int RolId { get; set; }
+        public Rol Rol { get; set; }
+        public int FormId { get; set; }
+        public Form Form { get; set; }
+        public int PermissionId { get; set; }
+        public Permission Permission { get; set; }
+    }
+}
