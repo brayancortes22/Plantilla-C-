@@ -7,7 +7,7 @@ namespace Entity.Model.Anime
     {
         public int IdAnime { get; set; }
         public int IdGenero { get; set; }
-        public Anime Anime { get; set; }
+        public Animes Anime { get; set; }
         public Genero Genero { get; set; }
     }
 }

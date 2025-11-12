@@ -6,7 +6,7 @@ using Entity.Model.Base;
 
 namespace Entity.Model.Anime
 {
-    public class Anime : BaseModel
+    public class Animes : BaseModel
     {
         public string Titulo { get; set; }
         public string Sinopsis { get; set; }

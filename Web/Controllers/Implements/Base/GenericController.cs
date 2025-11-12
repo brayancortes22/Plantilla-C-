@@ -6,7 +6,7 @@ using Entity.Model.Base;
 using Entity.Dtos.Base;
 using Business.Interfaces.Security;
 
-namespace Web.Controllers.Implements
+namespace Web.Controllers.Implements.Base
 {
     [ApiController]
     public abstract class GenericController<TDto, TEntity> : ControllerBase

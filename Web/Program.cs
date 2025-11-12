@@ -1,3 +1,4 @@
+
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -10,16 +11,21 @@ using FluentValidation.AspNetCore;
 using Entity.Context;
 
 using Utilities.Mappers.Profiles.Security;
+using Utilities.Mappers.Profiles.Anime;
 
 using Data.Implements.BaseData;
 using Data.Interfaces.BaseData;
 using Data.Interfaces.Security;
 using Data.Implements.Security;
+using Data.Interfaces.Anime;
+using Data.Implements.Anime;
 
 using Business.Interfaces.Base;
 using Business.Implements.Base;
 using Business.Implements.Security;
 using Business.Interfaces.Security;
+using Business.Interfaces.Anime;
+using Business.Implements.Anime;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,7 +66,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped(typeof(IBaseModelData<>), typeof(BaseModelData<>));
 builder.Services.AddScoped(typeof(IBaseBusiness<,>), typeof(BaseBusiness<,>));
 
-// Registrar servicios para entidades nuevas
+// Registrar servicios para entidades security
 builder.Services.AddScoped<IUserData, UserData>();
 builder.Services.AddScoped<IUserBusiness, UserBusiness>();
 
@@ -86,8 +92,40 @@ builder.Services.AddScoped<IRolFormPermissionData, RolFormPermissionData>();
 builder.Services.AddScoped<IRolFormPermissionBusiness, RolFormPermissionBusiness>();
 
 
+// registrar servicios para entidades de anime
+
+builder.Services.AddScoped<IEstudioData, EstudioData>();
+builder.Services.AddScoped<IEstudioBusiness, EstudioBusiness>();
+
+builder.Services.AddScoped<IAnimeData, AnimeData>();
+builder.Services.AddScoped<IAnimeBusiness, AnimeBusiness>();
+
+builder.Services.AddScoped<IGeneroData, GeneroData>();
+builder.Services.AddScoped<IGeneroBusiness, GeneroBusiness>();
+
+builder.Services.AddScoped<IAnimeGeneroData, AnimeGeneroData>();
+builder.Services.AddScoped<IAnimeGeneroBusiness, AnimeGeneroBusiness>();
+
+builder.Services.AddScoped<IPersonajeData, PersonajeData>();
+builder.Services.AddScoped<IPersonajeBusiness, PersonajeBusiness>();
+
+builder.Services.AddScoped<IAnimePersonajeData, AnimePersonajeData>();
+builder.Services.AddScoped<IAnimePersonajeBusiness, AnimePersonajeBusiness>();
+
+builder.Services.AddScoped<IActorVozData, ActorVozData>();
+builder.Services.AddScoped<IActorVozBusiness, ActorVozBusiness>();
+
+builder.Services.AddScoped<IPersonajeVozData, PersonajeVozData>();
+builder.Services.AddScoped<IPersonajeVozBusiness, PersonajeVozBusiness>();
+
+builder.Services.AddScoped<IUsuarioAnimeData, UsuarioAnimeData>();
+builder.Services.AddScoped<IUsuarioAnimeBusiness, UsuarioAnimeBusiness>();
+
+
+
 // Registrar perfiles de AutoMapper
 builder.Services.AddAutoMapper(cfg => {
+    // Perfiles de security
     cfg.AddProfile<UserProfile>();
     cfg.AddProfile<RolUserProfile>();
     cfg.AddProfile<RolProfile>();
@@ -96,6 +134,17 @@ builder.Services.AddAutoMapper(cfg => {
     cfg.AddProfile<FormModuleProfile>();
     cfg.AddProfile<ModuleProfile>();
     cfg.AddProfile<RolFormPermissionProfile>();
+
+    // Perfiles de anime
+    cfg.AddProfile<EstudioProfile>();
+    cfg.AddProfile<AnimeProfile>();
+    cfg.AddProfile<GeneroProfile>();
+    cfg.AddProfile<AnimeGeneroProfile>();
+    cfg.AddProfile<PersonajeProfile>();
+    cfg.AddProfile<AnimePersonajeProfile>();
+    cfg.AddProfile<ActorVozProfile>();
+    cfg.AddProfile<PersonajeVozProfile>();
+    cfg.AddProfile<UsuarioAnimeProfile>();
 });
 
 var app = builder.Build();

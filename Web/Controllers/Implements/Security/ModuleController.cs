@@ -1,6 +1,7 @@
 using Business.Interfaces.Security;
 using Entity.Dtos.Security;
 using Entity.Model.Security;
+using Web.Controllers.Implements.Base;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

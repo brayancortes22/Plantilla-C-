@@ -48,7 +48,7 @@ namespace Entity.Context
     public DbSet<RolFormPermission> RolFormPermissions { get; set; }
     // DbSet para entidades de Anime
     public DbSet<Estudio> Estudios { get; set; }
-    public DbSet<Anime> Animes { get; set; }
+    public DbSet<Animes> Animes { get; set; }
     public DbSet<Genero> Generos { get; set; }
     public DbSet<AnimeGenero> AnimeGeneros { get; set; }
     public DbSet<Personaje> Personajes { get; set; }
@@ -113,7 +113,7 @@ namespace Entity.Context
                 .HasForeignKey(ua => ua.IdAnime);
 
             // Estudio-Anime: 1-N
-            modelBuilder.Entity<Anime>()
+            modelBuilder.Entity<Animes>()
                 .HasOne(a => a.Estudio)
                 .WithMany(e => e.Animes)
                 .HasForeignKey(a => a.IdEstudio);

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using Entity.Dtos.Base;
 namespace Entity.Dtos.Anime
 {
-    public class AnimeDto
+    public class AnimeDto : BaseDto
     {
         public string Titulo { get; set; }
         public string Sinopsis { get; set; }

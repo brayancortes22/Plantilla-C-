@@ -9,6 +9,6 @@ namespace Entity.Model.Anime
         public string Nombre { get; set; }
         public string Pais { get; set; }
         public int? Fundacion { get; set; }
-        public ICollection<Anime> Animes { get; set; }
+        public ICollection<Animes> Animes { get; set; }
     }
 }
