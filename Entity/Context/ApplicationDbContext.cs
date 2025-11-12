@@ -90,11 +90,11 @@ namespace Entity.Context
 
             // PersonajeVoz: clave compuesta
             modelBuilder.Entity<PersonajeVoz>()
-                .HasKey(pv => new { pv.Personaje.Id, pv.IdActorVoz });
+                .HasKey(pv => new { pv.IdPersonaje, pv.IdActorVoz });
             modelBuilder.Entity<PersonajeVoz>()
                 .HasOne(pv => pv.Personaje)
                 .WithMany(p => p.PersonajeVoces)
-                .HasForeignKey("IdPersonaje");
+                .HasForeignKey(pv => pv.IdPersonaje);
             modelBuilder.Entity<PersonajeVoz>()
                 .HasOne(pv => pv.ActorVoz)
                 .WithMany(av => av.PersonajeVoces)
