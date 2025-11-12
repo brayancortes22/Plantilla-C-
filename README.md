@@ -70,15 +70,15 @@ erDiagram
         int Id PK
         string Nombre
         string Pais
-        int? Fundacion
+        int Fundacion
     }
     Anime {
         int Id PK
         string Titulo
         string Sinopsis
-        DateTime? FechaEmision
+        DateTime FechaEmision
         string Estado
-        int? IdEstudio FK
+        int IdEstudio FK
     }
     Genero {
         int Id PK
@@ -116,7 +116,7 @@ erDiagram
         int Id PK
         int IdUser FK
         int IdAnime FK
-        int? Calificacion
+        int Calificacion
         string EstadoVisualizacion
     }
 
