@@ -1,80 +1,93 @@
+
 -- ==============================
 -- 📦 BLOQUE DE SEGURIDAD
 -- ==============================
 
-CREATE TABLE Person (
-    id_person INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100),
-    correo VARCHAR(150) UNIQUE NOT NULL
-);
-
 CREATE TABLE User (
-    id_user INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    estado BOOLEAN DEFAULT TRUE,
-    id_person INT,
-    FOREIGN KEY (id_person) REFERENCES Person(id_person)
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    UserName VARCHAR(100) NOT NULL,
+    Email VARCHAR(150) NOT NULL,
+    PasswordHash VARCHAR(255) NOT NULL,
+    IsActive BOOLEAN DEFAULT TRUE,
+    Description VARCHAR(255),
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL
 );
 
 CREATE TABLE Rol (
-    id_rol INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50) NOT NULL,
-    descripcion VARCHAR(150)
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    Description VARCHAR(255),
+    IsSystem BOOLEAN DEFAULT FALSE,
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL
 );
 
 CREATE TABLE RolUser (
-    id_user INT,
-    id_rol INT,
-    PRIMARY KEY (id_user, id_rol),
-    FOREIGN KEY (id_user) REFERENCES User(id_user),
-    FOREIGN KEY (id_rol) REFERENCES Rol(id_rol)
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    UserId INT NOT NULL,
+    RolId INT NOT NULL,
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL,
+    FOREIGN KEY (UserId) REFERENCES User(Id),
+    FOREIGN KEY (RolId) REFERENCES Rol(Id)
 );
 
 CREATE TABLE Permission (
-    id_permission INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50) NOT NULL, -- Ej: CREATE, READ, UPDATE, DELETE
-    descripcion VARCHAR(100)
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    Description VARCHAR(255),
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL
 );
 
-CREATE TABLE Module (
-    id_module INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL,
-    descripcion VARCHAR(200)
+CREATE TABLE Modules (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    Description VARCHAR(255),
+    `Order` INT,
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL
 );
 
 CREATE TABLE Form (
-    id_form INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL,
-    ruta VARCHAR(150),
-    descripcion VARCHAR(200)
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100) NOT NULL,
+    Url VARCHAR(150),
+    Icon VARCHAR(100),
+    Description VARCHAR(255),
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL
 );
 
 CREATE TABLE FormModule (
-    id_form INT,
-    id_module INT,
-    PRIMARY KEY (id_form, id_module),
-    FOREIGN KEY (id_form) REFERENCES Form(id_form),
-    FOREIGN KEY (id_module) REFERENCES Module(id_module)
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    FormId INT NOT NULL,
+    ModuleId INT NOT NULL,
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL,
+    FOREIGN KEY (FormId) REFERENCES Form(Id),
+    FOREIGN KEY (ModuleId) REFERENCES Modules(Id)
 );
 
 CREATE TABLE RolFormPermission (
-    id_rol INT,
-    id_form INT,
-    id_permission INT,
-    PRIMARY KEY (id_rol, id_form, id_permission),
-    FOREIGN KEY (id_rol) REFERENCES Rol(id_rol),
-    FOREIGN KEY (id_form) REFERENCES Form(id_form),
-    FOREIGN KEY (id_permission) REFERENCES Permission(id_permission)
-);
-
-CREATE TABLE ChangeLog (
-    id_log INT PRIMARY KEY AUTO_INCREMENT,
-    id_user INT,
-    accion VARCHAR(200),
-    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_user) REFERENCES User(id_user)
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    RolId INT NOT NULL,
+    FormId INT NOT NULL,
+    PermissionId INT NOT NULL,
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL,
+    FOREIGN KEY (RolId) REFERENCES Rol(Id),
+    FOREIGN KEY (FormId) REFERENCES Form(Id),
+    FOREIGN KEY (PermissionId) REFERENCES Permission(Id)
 );
 
 -- ==============================
@@ -82,72 +95,104 @@ CREATE TABLE ChangeLog (
 -- ==============================
 
 CREATE TABLE Estudio (
-    id_estudio INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL,
-    pais VARCHAR(50),
-    fundacion YEAR
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(100) NOT NULL,
+    Pais VARCHAR(50),
+    Fundacion INT,
+    Description VARCHAR(255),
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL
 );
 
-CREATE TABLE Anime (
-    id_anime INT PRIMARY KEY AUTO_INCREMENT,
-    titulo VARCHAR(150) NOT NULL,
-    sinopsis TEXT,
-    fecha_emision DATE,
-    estado VARCHAR(50),
-    id_estudio INT,
-    FOREIGN KEY (id_estudio) REFERENCES Estudio(id_estudio)
+CREATE TABLE Animes (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Titulo VARCHAR(150) NOT NULL,
+    Sinopsis TEXT,
+    FechaEmision DATE,
+    Estado VARCHAR(50),
+    IdEstudio INT,
+    Description VARCHAR(255),
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL,
+    FOREIGN KEY (IdEstudio) REFERENCES Estudio(Id)
 );
 
 CREATE TABLE Genero (
-    id_genero INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50) NOT NULL
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(50) NOT NULL,
+    Description VARCHAR(255),
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL
 );
 
 CREATE TABLE AnimeGenero (
-    id_anime INT,
-    id_genero INT,
-    PRIMARY KEY (id_anime, id_genero),
-    FOREIGN KEY (id_anime) REFERENCES Anime(id_anime),
-    FOREIGN KEY (id_genero) REFERENCES Genero(id_genero)
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    IdAnime INT NOT NULL,
+    IdGenero INT NOT NULL,
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL,
+    FOREIGN KEY (IdAnime) REFERENCES Animes(Id),
+    FOREIGN KEY (IdGenero) REFERENCES Genero(Id)
 );
 
 CREATE TABLE Personaje (
-    id_personaje INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100) NOT NULL,
-    rol VARCHAR(50),
-    descripcion TEXT
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(100) NOT NULL,
+    Rol VARCHAR(50),
+    Descripcion TEXT,
+    Description VARCHAR(255),
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL
 );
 
 CREATE TABLE AnimePersonaje (
-    id_anime INT,
-    id_personaje INT,
-    papel VARCHAR(50),
-    PRIMARY KEY (id_anime, id_personaje),
-    FOREIGN KEY (id_anime) REFERENCES Anime(id_anime),
-    FOREIGN KEY (id_personaje) REFERENCES Personaje(id_personaje)
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    IdAnime INT NOT NULL,
+    IdPersonaje INT NOT NULL,
+    Papel VARCHAR(50),
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL,
+    FOREIGN KEY (IdAnime) REFERENCES Animes(Id),
+    FOREIGN KEY (IdPersonaje) REFERENCES Personaje(Id)
 );
 
 CREATE TABLE ActorVoz (
-    id_actor_voz INT PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(100),
-    nacionalidad VARCHAR(50)
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Nombre VARCHAR(100),
+    Nacionalidad VARCHAR(50),
+    Description VARCHAR(255),
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL
 );
 
 CREATE TABLE PersonajeVoz (
-    id_personaje INT,
-    id_actor_voz INT,
-    idioma VARCHAR(50),
-    PRIMARY KEY (id_personaje, id_actor_voz),
-    FOREIGN KEY (id_personaje) REFERENCES Personaje(id_personaje),
-    FOREIGN KEY (id_actor_voz) REFERENCES ActorVoz(id_actor_voz)
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    IdPersonaje INT NOT NULL,
+    IdActorVoz INT NOT NULL,
+    Idioma VARCHAR(50),
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL,
+    FOREIGN KEY (IdPersonaje) REFERENCES Personaje(Id),
+    FOREIGN KEY (IdActorVoz) REFERENCES ActorVoz(Id)
 );
 
 CREATE TABLE UsuarioAnime (
-    id_user INT,
-    id_anime INT,
-    calificacion INT,
-    estado_visualizacion VARCHAR(50),
-    PRIMARY KEY (id_user, id_anime),
-    FOREIGN KEY (id_user) REFERENCES User(id_user),
-    FOREIGN KEY (id_anime) REFERENCES Anime(id_anime)
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    IdUser INT NOT NULL,
+    IdAnime INT NOT NULL,
+    Calificacion INT,
+    EstadoVisualizacion VARCHAR(50),
+    Active BOOLEAN DEFAULT TRUE,
+    CreatedAt DATETIME NOT NULL,
+    UpdatedAt DATETIME NULL,
+    FOREIGN KEY (IdUser) REFERENCES User(Id),
+    FOREIGN KEY (IdAnime) REFERENCES Animes(Id)
 );

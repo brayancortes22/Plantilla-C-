@@ -11,7 +11,7 @@ namespace Web.Controllers.Implements.Security
     [Route("api/[controller]")]
     public class FormController : GenericController<FormDto, Form>
     {
-        public FormController(IFormBusiness business, ILogger<FormController> logger)
+        public FormController(IFormBusiness business, ILogger<GenericController<FormDto, Form>> logger)
             : base(business, logger) { }
 
         protected override int GetEntityId(FormDto dto) => dto.Id;

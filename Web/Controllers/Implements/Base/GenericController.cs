@@ -22,9 +22,6 @@ namespace Web.Controllers.Implements.Base
             _logger = logger;
         }
 
-        protected GenericController(IFormBusiness business, ILogger<FormController> logger)
-        {
-        }
 
         [HttpGet]
         public virtual async Task<IActionResult> GetAll()
